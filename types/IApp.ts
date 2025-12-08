@@ -1,0 +1,32 @@
+import { FastifyInstance } from "fastify";
+
+/**
+ * 应用程序类型接口
+ * @interface IApp
+ * @property {FastifyInstance} server - Fastify服务器实例
+ * @property {Object} options - 应用程序配置选项
+ * @property {string} baseDir - 应用程序基础目录路径
+ * @property {string} businessPath - 业务代码目录路径
+ * @property {string} env - 当前环境名称：local、beta、production
+ * @property {Object} middlewares - 中间件对象
+ * @property {Object} routerSchema - 路由规则对象
+ * @property {Object} controller - 控制器对象
+ * @property {Object} service - 服务对象
+ * @property {Object} config - 配置对象
+ * @property {Object} extend - 扩展对象
+ */
+interface IApp {
+  server: FastifyInstance;
+  options: {};
+  baseDir: string;
+  businessPath: string;
+  env: string;
+  middlewares: {};
+  routerSchema: {};
+  controller: {};
+  service: {};
+  config: {};
+  extend: {};
+}
+
+export { IApp };

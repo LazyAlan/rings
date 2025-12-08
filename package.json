@@ -1,0 +1,30 @@
+{
+  "name": "rings",
+  "version": "1.0.0",
+  "description": "全栈开发一个支持多网站建设的系统平台，通过配置沉淀重复性工作并提供定制化需求",
+  "homepage": "https://github.com/LazyAlan/rings#readme",
+  "bugs": {
+    "url": "https://github.com/LazyAlan/rings/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LazyAlan/rings.git"
+  },
+  "license": "MIT",
+  "author": "AlanXu",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "build": "[ -d dist ] && rm -rf dist; tsc",
+    "start:dev": "_ENV=local, node ./dist/index.js",
+    "start:beta": "_ENV=beta, node ./dist/index.js",
+    "start:pro": "_ENV=production, node ./dist/index.js"
+  },
+  "dependencies": {
+    "fastify": "^5.6.2",
+    "glob": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1"
+  }
+}
