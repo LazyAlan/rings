@@ -14,6 +14,7 @@ import { FastifyInstance } from "fastify";
  * @property {Object} service - 服务对象
  * @property {Object} config - 配置对象
  * @property {Object} extend - 扩展对象
+ * @property {Array} router - 路由对象
  */
 interface IApp {
   server: FastifyInstance;
@@ -27,6 +28,7 @@ interface IApp {
   service: {};
   config: {};
   extend: {};
+  router: {};
 }
 
 export { IApp };

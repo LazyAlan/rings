@@ -37,22 +37,30 @@ const start = async (options?: any) => {
   console.log(`loaded middleware====>`, app.middlewares);
 
   await routerSchemaLoader(app);
-  console.log(`loaded routerSchema`);
+  console.log(`loaded routerSchema====>`, app.routerSchema);
 
   await controllerLoader(app);
-  console.log(`loaded controller`);
+  console.log(`loaded controller====>`, app.controller);
 
   await serviceLoader(app);
-  console.log(`loaded service`);
+  console.log(`loaded service====>`, app.service);
 
   await configLoader(app);
-  console.log(`loaded config`);
+  console.log(`loaded config====>`, app.config);
 
   await extendLoader(app);
-  console.log(`loaded extend`);
+  console.log(`loaded extend====>`, app.extend);
+
+  // 在 app/middleware/ 文件夹下注册全局中间件
+  try {
+    let module = await import(`${app.businessPath + sep}middleware`);
+    module.default(app);
+  } catch (error) {
+    console.log("app/middleware/ 目录下没有找到任何文件");
+  }
 
   await routerLoader(app);
-  console.log(`loaded router`);
+  console.log(`loaded router====>`, app.router);
 
   // 测试路由
   fastify.get("/hello", async (request, reply) => {

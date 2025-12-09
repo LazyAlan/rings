@@ -8,7 +8,7 @@ import { IApp } from "../types/IApp";
  * @param loaderName 加载器名称
  * @param loaderModuleObject 模块对象
  */
-const moduleLoadFun = async (
+const moduleLoadClassAndFunc = async (
   app: IApp,
   loaderName: string,
   loaderModuleObject: any = {}
@@ -18,7 +18,7 @@ const moduleLoadFun = async (
   const filePathList = globSync(resolve(filePath) + `/**/*.js`); // 这里要写 .js 因为最终执行的是 js 文件
 
   if (!filePathList || !filePathList.length) {
-    console.log("没有读取到文件");
+    console.log(`${loaderName} 没有读取到文件`);
     return;
   }
 
@@ -35,8 +35,8 @@ const moduleLoadFun = async (
       if (i === moduleCatalogs.length - 1) {
         const mod = await import(filePath);
         // 兼容多种导出形式：
-        // - ESM default export => mod.default is function
-        // - CommonJS exported function => mod (or mod.default) is function
+        // - ESM default export => mod.default is function/class
+        // - CommonJS exported function/class => mod (or mod.default) is function
         // - 有时会出现双重 default 包裹的情形 => mod.default.default
         let exported: any =
           mod && mod.default !== undefined ? mod.default : mod;
@@ -50,23 +50,49 @@ const moduleLoadFun = async (
           exported = exported.default;
         }
 
+        let instance: any;
+
         if (typeof exported === "function") {
-          try {
-            exported(app);
-          } catch (err) {
-            console.warn(
-              `[middleware loader] failed to execute middleware: ${filePath}`,
-              err
-            );
+          // 判断是否为 class（尽量兼容各种打包产物）
+          const fnStr = Function.prototype.toString.call(exported);
+          const looksLikeClass =
+            /^class\s/.test(fnStr) ||
+            (exported.prototype &&
+              Object.getOwnPropertyNames(exported.prototype).length > 1);
+
+          if (looksLikeClass) {
+            try {
+              instance = new exported(app);
+            } catch (err) {
+              // 如果 new 失败，退回到当作工厂函数调用
+              try {
+                instance = exported(app);
+              } catch (err2) {
+                console.warn(
+                  `[${loaderName} loader] failed to instantiate/call exported function/class: ${filePath}`,
+                  err2
+                );
+              }
+            }
+          } else {
+            // 作为工厂函数调用，返回实例
+            try {
+              instance = exported(app);
+            } catch (err) {
+              console.warn(
+                `[${loaderName} loader] failed to execute exported factory function: ${filePath}`,
+                err
+              );
+            }
           }
         } else {
           console.warn(
-            `[middleware loader] exported middleware is not a function: ${filePath}`
+            `[${loaderName} loader] exported module is not a function/class: ${filePath}`
           );
         }
 
-        // 保存实际导出的东西（优先保存函数/默认导出），回退到整个模块对象
-        tempModule[moduleCatalogs[i]] = exported || mod;
+        // 保存实际导出的东西（优先保存实例/函数/默认导出），回退到整个模块对象
+        tempModule[moduleCatalogs[i]] = instance || exported || mod;
         break;
       }
 
@@ -79,4 +105,4 @@ const moduleLoadFun = async (
   }
 };
 
-export { moduleLoadFun };
+export { moduleLoadClassAndFunc };
