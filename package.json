@@ -16,9 +16,9 @@
   "main": "index.js",
   "scripts": {
     "build": "[ -d dist ] && rm -rf dist; tsc",
-    "start:dev": "_ENV=local, node ./dist/index.js",
-    "start:beta": "_ENV=beta, node ./dist/index.js",
-    "start:pro": "_ENV=production, node ./dist/index.js"
+    "dev": "_ENV=local, node ./dist/index.js",
+    "beta": "_ENV=beta, node ./dist/index.js",
+    "pro": "_ENV=production, node ./dist/index.js"
   },
   "dependencies": {
     "fastify": "^5.6.2",

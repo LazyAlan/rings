@@ -1,4 +1,4 @@
-import { IApp } from "types/IApp";
+import { IApp } from "../../types/IApp";
 import { moduleLoadFun } from "../../utils/moduleLoad";
 
 /**

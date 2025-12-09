@@ -1,9 +1,9 @@
 import { resolve, sep } from "node:path";
 import { globSync } from "glob";
-import { IApp } from "types/IApp";
+import { IApp } from "../types/IApp";
 
 /**
- *
+ * 加载模块，模块实现中需要是一个 Function
  * @param app - 应用程序实例
  * @param loaderName 加载器名称
  * @param loaderModuleObject 模块对象
@@ -18,7 +18,7 @@ const moduleLoadFun = async (
   const filePathList = globSync(resolve(filePath) + `/**/*.js`); // 这里要写 .js 因为最终执行的是 js 文件
 
   if (!filePathList || !filePathList.length) {
-    console.log("没有读取到中间件文件");
+    console.log("没有读取到文件");
     return;
   }
 
