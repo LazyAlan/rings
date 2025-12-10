@@ -1,3 +1,3 @@
-import { start } from "./rings-core";
+import { start } from "./rings-core/index.js";
 
 start();

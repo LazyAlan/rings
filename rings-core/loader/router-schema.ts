@@ -1,4 +1,4 @@
-import { IApp } from "../../types/IApp";
+import { IApp } from "../../types/IApp.js";
 import { resolve, sep } from "node:path";
 import { globSync } from "glob";
 

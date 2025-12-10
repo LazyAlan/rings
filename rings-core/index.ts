@@ -1,22 +1,25 @@
 import Fastify, { FastifyInstance } from "fastify";
-import { IApp } from "types/IApp";
+import { IApp } from "types/IApp.js";
 import { resolve, sep } from "node:path";
-import { getEnv } from "./env";
+import { getEnv } from "./env.js";
 
 // 加载器部分
-import configLoader from "./loader/config";
-import controllerLoader from "./loader/controller";
-import extendLoader from "./loader/extend";
-import middlewareLoader from "./loader/middleware";
-import routerSchemaLoader from "./loader/router-schema";
-import routerLoader from "./loader/router";
-import serviceLoader from "./loader/service";
+import configLoader from "./loader/config.js";
+import controllerLoader from "./loader/controller.js";
+import extendLoader from "./loader/extend.js";
+import middlewareLoader from "./loader/middleware.js";
+import routerSchemaLoader from "./loader/router-schema.js";
+import routerLoader from "./loader/router.js";
+import serviceLoader from "./loader/service.js";
 
 const start = async (options?: any) => {
   const app: IApp = {} as IApp;
 
   const fastify: FastifyInstance = Fastify({
     logger: true,
+    ajv: {
+      customOptions: { strict: true },
+    },
   });
 
   app.server = fastify;
@@ -37,7 +40,7 @@ const start = async (options?: any) => {
   console.log(`loaded middleware====>`, app.middlewares);
 
   await routerSchemaLoader(app);
-  console.log(`loaded routerSchema====>`, app.routerSchema);
+  // console.log(`loaded routerSchema====>`, app.routerSchema);
 
   await controllerLoader(app);
   console.log(`loaded controller====>`, app.controller);
@@ -46,18 +49,28 @@ const start = async (options?: any) => {
   console.log(`loaded service====>`, app.service);
 
   await configLoader(app);
-  console.log(`loaded config====>`, app.config);
+  // console.log(`loaded config====>`, app.config);
 
   await extendLoader(app);
-  console.log(`loaded extend====>`, app.extend);
+  // console.log(`loaded extend====>`, app.extend);
 
-  // 在 app/middleware/ 文件夹下注册全局中间件
-  try {
-    let module = await import(`${app.businessPath + sep}middleware`);
-    module.default(app);
-  } catch (error) {
-    console.log("app/middleware/ 目录下没有找到任何文件");
-  }
+  // 把 app/middleware.js 注册为全局中间件，统一为 ESM 之后就不用兼容处理了
+  // const mod = await import(`${app.businessPath + sep}middleware.js`);
+  // const fn =
+  //   typeof mod === "function"
+  //     ? mod
+  //     : typeof mod?.default === "function"
+  //     ? mod.default
+  //     : typeof mod?.default?.default === "function"
+  //     ? mod.default.default
+  //     : null;
+  // if (typeof fn === "function") {
+  //   await fn(app);
+  // } else {
+  //   console.log("找到 middleware 模块，但没有可执行的默认导出，module:", mod);
+  // }
+  const module = await import(`${app.businessPath + sep}middleware.js`);
+  module.default(app);
 
   await routerLoader(app);
   console.log(`loaded router====>`, app.router);

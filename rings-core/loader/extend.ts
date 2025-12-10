@@ -1,5 +1,5 @@
-import { IApp } from "../../types/IApp";
-import { moduleLoadClassAndFunc } from "../../utils/moduleLoad";
+import { IApp } from "../../types/IApp.js";
+import { moduleLoadClassAndFunc } from "../../utils/moduleLoad.js";
 
 /**
  * 扩展加载器，把 app/extend 文件目录下的文件转换成模块添加到 app 提供调用，支持多层级

@@ -1,5 +1,5 @@
 import { resolve, sep } from "path";
-import { IApp } from "../../types/IApp";
+import { IApp } from "../../types/IApp.js";
 
 /**
  * 配置加载器，通过配置区分 本地/测试/生产 环境
