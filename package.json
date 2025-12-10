@@ -15,7 +15,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "[ -d dist ] && rm -rf dist; tsc",
+    "build": "[ -d dist ] && rm -rf dist; tsc && cp -R ./app/views ./dist/app/views",
     "dev": "_ENV=local, node ./dist/index.js",
     "beta": "_ENV=beta, node ./dist/index.js",
     "pro": "_ENV=production, node ./dist/index.js"
@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "@types/nunjucks": "^3.2.6"
+    "@types/nunjucks": "^3.2.6",
+    "cpx": "^1.5.0"
   }
 }

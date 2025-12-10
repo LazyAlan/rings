@@ -32,7 +32,7 @@ const moduleLoadClassAndFunc = async (
     let tempModule = loaderModuleObject;
     const moduleCatalogs = modulePath.split(sep);
     for (let i = 0; i < moduleCatalogs.length; i++) {
-      // ESM 和 CJM 兼容处理，统一为 ESM 之后不再需要了
+      // ESM 和 CJM 兼容处理，改为使用 ESM 之后不再需要了
       // if (i === moduleCatalogs.length - 1) {
       //   const mod = await import(filePath);
       //   // 兼容多种导出形式：

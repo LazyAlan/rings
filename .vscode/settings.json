@@ -1,0 +1,44 @@
+// .vscode/settings.json
+{
+  // 文件关联设置
+  "files.associations": {
+    "*.njk": "html" // 将 .njk 文件关联为 HTML 以获得更好的 CSS 支持
+  },
+
+  // Emmet 支持（用于快速编写 HTML/CSS）
+  "emmet.includeLanguages": {
+    "nunjucks": "html"
+  },
+
+  // HTML CSS Support 插件设置
+  "html-css-class-completion.enableEmmetSupport": true,
+  "css.styleSheets": [
+    // 自动包含项目中的 CSS 文件（根据需要调整路径）
+    "css/**/*.css",
+    "styles/**/*.css",
+    "assets/css/*.css"
+  ],
+
+  // Nunjucks 插件增强设置
+  "nunjucksTemplate.supportHtmlTags": true,
+  "nunjucksTemplate.supportHtmlAttributes": true,
+  "nunjucksTemplate.suggestion": true,
+
+  // 编辑器设置优化
+  "[nunjucks]": {
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": true,
+      "strings": true
+    },
+    "editor.suggest.showSnippets": true
+  },
+
+  // 自动闭合标签（在 nunjucks 中也有效）
+  "html.autoClosingTags": true,
+
+  // 格式化设置
+  "html.format.wrapLineLength": 0,
+  "html.format.wrapAttributes": "auto"
+}
