@@ -1,5 +1,11 @@
 import { FastifyInstance } from "fastify";
 
+interface IController {
+  viewController: {
+    renderPage: Function;
+  };
+}
+
 /**
  * 应用程序类型接口
  * @interface IApp
@@ -10,7 +16,7 @@ import { FastifyInstance } from "fastify";
  * @property {string} env - 当前环境名称：local、beta、production
  * @property {Object} middlewares - 中间件对象
  * @property {Object} routerSchema - 路由规则对象
- * @property {Object} controller - 控制器对象
+ * @property {IController} controller - 控制器对象
  * @property {Object} service - 服务对象
  * @property {Object} config - 配置对象
  * @property {Object} extend - 扩展对象
@@ -24,7 +30,7 @@ interface IApp {
   env: string;
   middlewares: {};
   routerSchema: {};
-  controller: {};
+  controller: IController;
   service: {};
   config: {};
   extend: {};

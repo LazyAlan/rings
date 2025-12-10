@@ -36,9 +36,5 @@ export default async (app: IApp) => {
     console.log(`获取 ${app.env} 配置文件错误：${error}`);
   }
 
-  app.config = Object.assign(
-    {},
-    defaultConfig.default,
-    envConfig.default
-  ).default;
+  app.config = Object.assign({}, defaultConfig.default, envConfig.default);
 };

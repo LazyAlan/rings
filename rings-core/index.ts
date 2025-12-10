@@ -84,12 +84,12 @@ const start = async (options?: any) => {
     return reply.send("Hello Rigns App");
   });
 
-  fastify.get("/view", async (request, reply) => {
-    return reply.view("index.njk", {
-      title: "website",
-      user: { name: "Alan" },
-    });
-  });
+  // fastify.get("/view", async (request, reply) => {
+  //   return reply.view("index.njk", {
+  //     title: "website",
+  //     user: { name: "Alan" },
+  //   });
+  // });
 
   try {
     await fastify.listen({ port: 3000 });
