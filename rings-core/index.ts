@@ -84,6 +84,11 @@ const start = async (options?: any) => {
     return reply.send("Hello Rigns App");
   });
 
+  fastify.post("/p", (request, reply) => {
+    console.log("=========post=========>", request.body);
+    reply.send("ok");
+  });
+
   // fastify.get("/view", async (request, reply) => {
   //   return reply.view("index.njk", {
   //     title: "website",

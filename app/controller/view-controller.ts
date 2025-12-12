@@ -1,10 +1,16 @@
 import { IApp } from "types/IApp.js";
+import { FastifyRequest, FastifyReply } from "fastify";
+
+type PageParams = { page: string }; // 这里可以在 schema 里用，就不需要在每个 controller 里写了
 
 export default (app: IApp) => {
   return class ViewController {
     // 根据模板渲染一个页面，填充数据可以从 service 里查询
-    async renderPage(request: any, reply: any) {
-      return reply.view(`${request.params?.page}.njk`, {
+    async renderPage(
+      req: FastifyRequest<{ Params: PageParams }>,
+      rep: FastifyReply
+    ) {
+      return rep.view(`${req.params?.page}.njk`, {
         title: "home page",
         user: { name: "AlanXu" },
       });

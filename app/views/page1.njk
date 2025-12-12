@@ -8,5 +8,22 @@
   <body>
     <h1>Hello,welcome to my {{ title }},I'm {{ user.name }}</h1>
     hahahaha
+    <button onclick="handleClick()">发起 post 请求</button>
+
+    <script>
+      function handleClick() {
+        const obj = {
+          a: 111,
+          b: 2222,
+        };
+        fetch("http://127.0.0.1:3000/p", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(obj),
+        });
+      }
+    </script>
   </body>
 </html>
