@@ -15,10 +15,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "[ -d dist ] && rm -rf dist; tsc && cp -R app/views app/asset dist/app/",
+    "build": "[ -d dist ] && rm -rf dist; tsc && cp -R app/views app/asset dist/app/ && cp -R app/pages/page1/Page1.vue dist/app/pages/page1/Page1.vue && cp -R app/pages/page2/Page2.vue dist/app/pages/page2/Page2.vue",
     "dev": "_ENV=local node ./dist/index.js",
     "beta": "_ENV=beta node ./dist/index.js",
-    "pro": "_ENV=production node ./dist/index.js"
+    "production": "_ENV=production node ./dist/index.js"
   },
   "dependencies": {
     "@fastify/static": "^8.3.0",
@@ -29,12 +29,26 @@
     "glob": "^13.0.0",
     "lodash": "^4.17.21",
     "nunjucks": "^3.2.4",
-    "typebox": "^1.0.61"
+    "typebox": "^1.0.61",
+    "vue": "^3.5.25"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.21",
     "@types/node": "^24.10.1",
     "@types/nunjucks": "^3.2.6",
-    "cpx": "^1.5.0"
+    "@types/webpack": "^5.28.5",
+    "@types/webpack-dev-server": "^4.7.2",
+    "cpx": "^1.5.0",
+    "css-loader": "^7.1.2",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.6.5",
+    "sass": "^1.97.0",
+    "sass-loader": "^16.0.6",
+    "style-loader": "^4.0.0",
+    "ts-loader": "^9.5.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3",
+    "vue-loader": "^17.4.2",
+    "webpack": "^5.103.0"
   }
 }

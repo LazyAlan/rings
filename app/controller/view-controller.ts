@@ -10,6 +10,7 @@ export default (app: IApp) => {
       req: FastifyRequest<{ Params: PageParams }>,
       rep: FastifyReply
     ) {
+      console.log("req.params?.page=========>", req.params?.page);
       return rep.view(`${req.params?.page}`, {
         title: "home page",
         user: { name: "AlanXu" },

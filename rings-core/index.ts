@@ -79,9 +79,9 @@ const start = async (options?: any) => {
   await routerLoader(app);
   console.log(`loaded router====>`, app.router);
 
-  app.server.get("*", (req, rep) => {
-    return rep.redirect("/view/index", 302);
-  });
+  // app.server.get("*", (req, rep) => {
+  //   return rep.redirect("/view/index", 302);
+  // });
 
   try {
     await fastify.listen({ port: 3000 });

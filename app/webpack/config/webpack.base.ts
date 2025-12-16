@@ -1,0 +1,112 @@
+import type { Configuration } from "webpack";
+import webpack from "webpack";
+import { join, resolve } from "node:path";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import vueLoaderPlugin from "vue-loader";
+
+/**
+ * webpack 基础配置
+ */
+const webpackBaseConfig: Configuration = {
+  // 入口文件
+  entry: {
+    entrypage1: "./dist/app/pages/page1/entrypage1.js",
+    entrypage2: "./dist/app/pages/page2/entrypage2.js",
+  },
+  // 模块解析规则，决定了要加载哪些模块，以及用什么方式去解析
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.ts$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: "file-loader",
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.(eot|ttf|woff|woff2)$/,
+        use: "file-loader",
+      },
+    ],
+  },
+  // 输出配置
+  output: {
+    path: join(process.cwd(), "./dist/app/public/prod"), // 输出目录
+    filename: "js/[name]_[chunkhash:8].bundle.js", // 输出文件名
+    publicPath: "./", // 产物文件中的资源引用路径，例如：<script src="./js/entrypage1_c027fac3.bundle.js"></script>
+    crossOriginLoading: "anonymous", // 跨域加载资源时，是否添加 crossorigin 属性
+  },
+  // 配置模块解析的具体行为，定义 webpack 在打包时如何解析模块的路径
+  resolve: {
+    extensions: [".ts", ".vue", ".js", ".css", ".scss"], // 查找的扩展名
+    alias: {
+      $pages: resolve(process.cwd(), "./app/pages"),
+    },
+  },
+  // 插件配置
+  plugins: [
+    // 处理 VUE 文件，这个插件是必须的
+    // 它的职能是将定义的其他规则复制并应用到 VUE 文件中
+    // 例如：如果定义了处理 TS 文件的规则，那么 VUE 文件中 <script> 板块也会应用这个规则
+    new vueLoaderPlugin.VueLoaderPlugin(),
+    // 把第三方库暴露到 window context 下
+    new webpack.ProvidePlugin({
+      Vue: "vue",
+    }),
+    // 定义全局常量
+    new webpack.DefinePlugin({
+      __VUE_OPTIONS_API__: true, // 是否启用 Vue 选项 API
+      __VUE_PROD_DEVTOOLS__: false, // 是否启用 Vue 生产环境下的 DevTools
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false, // 是否启用 Vue 生产环境下的 hydration(谁喝)
+    }),
+    // 构造最终渲染的页面模板
+    new HtmlWebpackPlugin({
+      template: resolve(process.cwd(), "./dist/app/views/entry.njk"), // 模板文件路径
+      filename: resolve(
+        process.cwd(),
+        "./dist/app/public/prod/",
+        "entrypage1.njk"
+      ), //产物输出路径
+      chunks: ["entrypage1"], // 引入的 chunk 名称，要和入口文件中的名称一致
+      // inject: "body",
+      // minify: {
+      //   collapseWhitespace: true,
+      //   removeComments: true,
+      // },
+    }),
+    // 构造最终渲染的页面模板
+    new HtmlWebpackPlugin({
+      template: resolve(process.cwd(), "./dist/app/views/entry.njk"), // 模板文件路径
+      filename: resolve(
+        process.cwd(),
+        "./dist/app/public/prod/",
+        "entrypage2.njk"
+      ), //产物输出路径
+      chunks: ["entrypage2"], // 引入的 chunk 名称，要和入口文件中的名称一致
+      // inject: "body",
+      // minify: {
+      //   collapseWhitespace: true,
+      //   removeComments: true,
+      // },
+    }),
+  ],
+  // 优化配置，例如：代码分割，模块合并，缓存，TreeShaking，压缩等
+  optimization: {
+    splitChunks: {
+      chunks: "all" as const,
+    },
+  },
+};
+
+export default webpackBaseConfig;

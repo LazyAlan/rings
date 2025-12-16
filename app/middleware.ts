@@ -9,7 +9,9 @@ import fastifyStatic from "@fastify/static";
  */
 
 export default async (app: IApp) => {
-  const viewPath = resolve(app.baseDir, `.${sep}app${sep}views`);
+  // const viewPath = resolve(app.baseDir, `.${sep}app${sep}views`);
+  const viewPath = resolve(app.baseDir, `.${sep}app${sep}public${sep}/prod`);
+  console.log("viewPath======>", viewPath);
   //  注册 view 插件
   app.server.register(fastifyView, {
     engine: { nunjucks },
@@ -41,6 +43,15 @@ export default async (app: IApp) => {
   app.server.register(fastifyStatic, {
     root: assetPath,
     prefix: "/app/asset/",
+    decorateReply: false,
+  });
+
+  // 注册 webpack 打包产物的静态资源
+  const prodPath = resolve(app.baseDir, `.${sep}app${sep}public${sep}prod`);
+  app.server.register(fastifyStatic, {
+    root: prodPath,
+    // prefix: "/dist/app/public/prod/",
+    prefix: "/",
     decorateReply: false,
   });
 };
