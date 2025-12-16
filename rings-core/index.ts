@@ -79,22 +79,9 @@ const start = async (options?: any) => {
   await routerLoader(app);
   console.log(`loaded router====>`, app.router);
 
-  // 测试路由
-  fastify.get("/hello", async (request, reply) => {
-    return reply.send("Hello Rigns App");
+  app.server.get("*", (req, rep) => {
+    return rep.redirect("/view/index", 302);
   });
-
-  fastify.post("/p", (request, reply) => {
-    console.log("=========post=========>", request.body);
-    reply.send("ok");
-  });
-
-  // fastify.get("/view", async (request, reply) => {
-  //   return reply.view("index.njk", {
-  //     title: "website",
-  //     user: { name: "Alan" },
-  //   });
-  // });
 
   try {
     await fastify.listen({ port: 3000 });
