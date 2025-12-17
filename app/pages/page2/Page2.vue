@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import utils from "../common/utils";
 
 const content = ref("");
 console.log("page2 init");
+console.log(utils);
 </script>
 
 <template>

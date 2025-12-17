@@ -1,9 +1,9 @@
 import webpack from "webpack";
-import webpackBaseConfig from "./config/webpack.base.js";
+import webpackProductionConfig from "./config/webpack.production.js";
 
 console.log("webpack building...");
 
-webpack(webpackBaseConfig, (err: any, stats: any) => {
+webpack(webpackProductionConfig, (err: any, stats: any) => {
   if (err) {
     console.error("webpack build error:", err);
     throw err;
