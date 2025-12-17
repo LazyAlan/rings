@@ -44,7 +44,7 @@ const webpackBaseConfig: Configuration = {
   output: {
     path: join(process.cwd(), "./dist/app/public/prod"), // 输出目录
     filename: "js/[name]_[chunkhash:8].bundle.js", // 输出文件名
-    publicPath: "./", // 产物文件中的资源引用路径，例如：<script src="./js/entrypage1_c027fac3.bundle.js"></script>
+    publicPath: "/", // 产物文件中的资源引用路径，例如：<script src="./js/entrypage1_c027fac3.bundle.js"></script>
     crossOriginLoading: "anonymous", // 跨域加载资源时，是否添加 crossorigin 属性
   },
   // 配置模块解析的具体行为，定义 webpack 在打包时如何解析模块的路径

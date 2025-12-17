@@ -2,9 +2,9 @@
 
 `pnpm install` 安装依赖
 
-`pnpm build` 打包项目
+`pnpm build` 编译项目
 
-`node ./dist/app/webpack/build.js` 使用 webpack 打包项目
+`node ./dist/app/webpack/build.js` 使用 webpack 打包前端项目
 
 `pnpm dev` 以开发环境启动项目
 
