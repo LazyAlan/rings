@@ -11,8 +11,9 @@ export default (app: IApp) => {
       rep: FastifyReply
     ) {
       console.log("req.params?.page=========>", req.params?.page);
-      return rep.view(`${req.params?.page}`, {
-        title: "home page",
+      // 通过 http://IP:port/view/page1 访问当前页面，不需要浏览器显示输入 entrypage1
+      return rep.view(`entry${req.params?.page}`, {
+        title: "home page!!!",
         user: { name: "AlanXu" },
       });
     }

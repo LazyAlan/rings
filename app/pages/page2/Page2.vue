@@ -9,6 +9,7 @@ console.log("page2 init");
   <div class="container">
     <h1>page 2</h1>
     <input v-model="content" placeholder="请输入内容" />
+    <div>{{ content }}</div>
   </div>
 </template>
 

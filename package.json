@@ -15,7 +15,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "[ -d dist ] && rm -rf dist; tsc && cp -R app/views app/asset dist/app/ && cp -R app/pages/page1/Page1.vue dist/app/pages/page1/Page1.vue && cp -R app/pages/page2/Page2.vue dist/app/pages/page2/Page2.vue",
+    "build": "[ -d dist ] && rm -rf dist; tsc && cp -R app/views app/asset dist/app/ && webpack --config app/webpack/config/webpack.base.ts",
     "dev": "_ENV=local node ./dist/index.js",
     "beta": "_ENV=beta node ./dist/index.js",
     "production": "_ENV=production node ./dist/index.js"
@@ -49,6 +49,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vue-loader": "^17.4.2",
-    "webpack": "^5.103.0"
+    "webpack": "^5.103.0",
+    "webpack-cli": "^6.0.1"
   }
 }

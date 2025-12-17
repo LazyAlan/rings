@@ -2,7 +2,7 @@ import type { Configuration } from "webpack";
 import webpack from "webpack";
 import { join, resolve } from "node:path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import vueLoaderPlugin from "vue-loader";
+import { VueLoaderPlugin } from "vue-loader";
 
 /**
  * webpack 基础配置
@@ -10,8 +10,10 @@ import vueLoaderPlugin from "vue-loader";
 const webpackBaseConfig: Configuration = {
   // 入口文件
   entry: {
-    entrypage1: "./dist/app/pages/page1/entrypage1.js",
-    entrypage2: "./dist/app/pages/page2/entrypage2.js",
+    // 这里要把 ts 交给 webpack 处理，因为只有这样才能把源代码中的 .vue 文件正确打包到 dist 目录下
+    // 之前的做法是把 .vue 文件在 build 阶段复制到打包后的 dist 目录下，这样是不能正确处理 .vue 文件中的
+    entrypage1: "./app/pages/page1/entrypage1.ts",
+    entrypage2: "./app/pages/page2/entrypage2.ts",
   },
   // 模块解析规则，决定了要加载哪些模块，以及用什么方式去解析
   module: {
@@ -23,7 +25,12 @@ const webpackBaseConfig: Configuration = {
       },
       {
         test: /\.ts$/,
-        use: "ts-loader",
+        use: {
+          loader: "ts-loader",
+          options: {
+            transpileOnly: true, // 提高编译速度
+          },
+        },
         exclude: /node_modules/,
       },
       {
@@ -59,16 +66,16 @@ const webpackBaseConfig: Configuration = {
     // 处理 VUE 文件，这个插件是必须的
     // 它的职能是将定义的其他规则复制并应用到 VUE 文件中
     // 例如：如果定义了处理 TS 文件的规则，那么 VUE 文件中 <script> 板块也会应用这个规则
-    new vueLoaderPlugin.VueLoaderPlugin(),
+    new VueLoaderPlugin(),
     // 把第三方库暴露到 window context 下
     new webpack.ProvidePlugin({
       Vue: "vue",
     }),
     // 定义全局常量
     new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: true, // 是否启用 Vue 选项 API
-      __VUE_PROD_DEVTOOLS__: false, // 是否启用 Vue 生产环境下的 DevTools
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: false, // 是否启用 Vue 生产环境下的 hydration(谁喝)
+      __VUE_OPTIONS_API__: JSON.stringify(true), // 是否启用 Vue 选项 API
+      __VUE_PROD_DEVTOOLS__: JSON.stringify(false), // 是否启用 Vue 生产环境下的 DevTools
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false), // 是否启用 Vue 生产环境下的 hydration(谁喝)
     }),
     // 构造最终渲染的页面模板
     new HtmlWebpackPlugin({
@@ -79,7 +86,7 @@ const webpackBaseConfig: Configuration = {
         "entrypage1.njk"
       ), //产物输出路径
       chunks: ["entrypage1"], // 引入的 chunk 名称，要和入口文件中的名称一致
-      // inject: "body",
+      inject: "body",
       // minify: {
       //   collapseWhitespace: true,
       //   removeComments: true,
@@ -94,7 +101,7 @@ const webpackBaseConfig: Configuration = {
         "entrypage2.njk"
       ), //产物输出路径
       chunks: ["entrypage2"], // 引入的 chunk 名称，要和入口文件中的名称一致
-      // inject: "body",
+      inject: "body",
       // minify: {
       //   collapseWhitespace: true,
       //   removeComments: true,
