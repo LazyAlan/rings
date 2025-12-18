@@ -3,8 +3,8 @@ import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import pinpa from "./store";
 import { createMemoryHistory, createRouter } from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
-import "./assets/custom.css";
+// import type { RouteRecordRaw } from "vue-router";
+import "./asset/custom.css";
 
 /**
  * vue 页面主入口，用于启动 vue
@@ -14,7 +14,7 @@ import "./assets/custom.css";
  */
 export default (
   pageComponent: Component,
-  { routes, libs }: { routes: RouteRecordRaw[]; libs: any }
+  { routes, libs }: { routes: any[]; libs: any }
 ) => {
   const app = createApp(pageComponent);
 

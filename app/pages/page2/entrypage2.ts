@@ -1,4 +1,9 @@
 import Page2 from "./Page2.vue";
 import boot from "../boot";
 
-boot(Page2);
+const routes: any[] = [
+  { path: "/", component: "./page2.vue" },
+  { path: "/about", component: "./page2.vue" },
+];
+
+boot(Page2, { routes, libs: "libs/" });
