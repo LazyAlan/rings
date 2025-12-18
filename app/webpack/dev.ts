@@ -1,20 +1,52 @@
-// import webpack from "webpack";
-// import webpackBaseConfig from "./config/webpack.base.js";
+// 开发环境我就不配置了，提供一个参考
+// const express = require("express");
+// const path = require("path");
+// const consoler = require("consoler");
+// const webpack = require("webpack");
+// const devMiddleware = require("webpack-dev-middleware");
+// const hotMiddleware = require("webpack-hot-middleware");
+// // 从webpack.config.js中获取webpack配置和devServer配置
 
-// console.log("webpack building...");
+// module.exports = () => {
+//   const {
+//     webpackConfig,
+//     DEV_SERVER_CONFIG,
+//   } = require("./config/webpack.dev.js");
 
-// webpack(webpackBaseConfig, (err: any, stats: any) => {
-//   if (err) {
-//     console.error("webpack build error:", err);
-//     throw err;
-//   }
-//   process.stdout.write(
-//     stats.toString({
-//       colors: true, // 在控制台打印彩色信息
-//       modules: false, // 不显示每个模块的打包信息
-//       children: false, // 不显示子模块的打包信息
-//       chunks: false, // 不显示每个 chunk 的打包信息
-//       chunkModules: true, // 显示每个 chunk 包含的模块信息
+//   const app = express();
+//   const compiler = webpack(webpackConfig);
+//   // 指定静态文件目录
+//   app.use(express.static(path.join(__dirname, "../public/dist")));
+//   //引用devMiddlewarez中间件（监控文件改动）
+//   app.use(
+//     devMiddleware(compiler, {
+//       //落地文件
+//       writeToDisk: (filePath) => filePath.endsWith(".tpl"),
+//       //资源路径
+//       publicPath: webpackConfig.output.publicPath,
+//       //headers配置
+//       headers: {
+//         "Access-Control-Allow-Origin": "*",
+//         "Access-Control-Allow-Headers":
+//           "X-Requested-With,Content-Type,Authorization",
+//         "Access-Control-Allow-Methods": "PUT,POST,GET,DELETE,OPTIONS",
+//       },
+//       stats: {
+//         colors: true,
+//       },
 //     })
 //   );
-// });
+//   //引用hotMiddleware中间件（热更新）
+//   app.use(
+//     hotMiddleware(compiler, {
+//       path: `/${DEV_SERVER_CONFIG.HMR_PATH}`,
+//       log: () => {},
+//     })
+//   );
+//   consoler.info("请等待webpack初次构建完成提示...");
+//   //启动服务devServer
+//   const port = DEV_SERVER_CONFIG.PORT;
+//   app.listen(port, () => {
+//     console.log(`app listening on port${port}`);
+//   });
+// };

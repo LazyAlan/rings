@@ -1,5 +1,4 @@
-import { createApp } from "vue";
 import Page2 from "./Page2.vue";
+import boot from "../boot";
 
-const app = createApp(Page2);
-app.mount("#root");
+boot(Page2);

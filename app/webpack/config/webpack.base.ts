@@ -4,6 +4,7 @@ import { basename, join, resolve } from "node:path";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { VueLoaderPlugin } from "vue-loader";
 import { globSync } from "glob";
+import axios from "axios";
 
 // 动态构造 pageEntries 和 HtmlWebpackPlugin
 const pageEntries: Record<string, string> = {};
@@ -96,6 +97,8 @@ const webpackBaseConfig: Configuration = {
     // 把第三方库暴露到 window 上
     new webpack.ProvidePlugin({
       Vue: "vue",
+      axios: "axios",
+      _: "lodash",
     }),
     // 定义全局常量
     new webpack.DefinePlugin({
