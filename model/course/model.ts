@@ -1,3 +1,4 @@
+// 模板类型配置参考 doc/dashboard-model.md 文档
 export default {
   //模板类型，不同模板类型对应不一样的模板数据结构
   mode: "dashboard",
