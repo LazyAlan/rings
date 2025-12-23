@@ -37,7 +37,7 @@ const webpackBaseConfig: Configuration = {
     // 这里要把 ts 交给 webpack 处理，因为只有这样才能把源代码中的 .vue 文件正确打包到 dist 目录下
     // 之前的做法是把 .vue 文件在 build 阶段复制到打包后的 dist 目录下，这样是不能正确处理 .vue 文件中的
     entrypage1: "./app/pages/page1/entrypage1.ts",
-    entrypage2: "./app/pages/page2/entrypage2.ts",
+    // entrypage2: "./app/pages/page2/entrypage2.ts",
   },
   // 模块解析规则，决定了要加载哪些模块，以及用什么方式去解析
   module: {

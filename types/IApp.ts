@@ -6,12 +6,14 @@ interface IController {
   };
   projectController: {
     getList: Function;
+    getModelList: Function;
   };
 }
 
 interface IServece {
   projectService: {
     getList: Function;
+    getModelList: Function;
   };
 }
 

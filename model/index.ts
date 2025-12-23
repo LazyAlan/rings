@@ -17,7 +17,7 @@ const projectExtendModel = (model: any, project: any) => {
       for (let i = 0; i < modelValue.length; ++i) {
         let modelItem = modelValue[i];
         let projItem = projValue.find((item) => item.key === modelItem.key);
-        //project有的键值，model也有，则递归调用projectExtendModel方法覆盖修改
+        // project有的键值，model也有，则递归调用projectExtendModel方法覆盖修改
         result.push(
           projItem ? projectExtendModel(modelItem, projItem) : modelItem
         );
@@ -27,7 +27,7 @@ const projectExtendModel = (model: any, project: any) => {
       for (let i = 0; i < projValue.length; ++i) {
         let projItem = projValue[i];
         let modelItem = modelValue.find((item) => item.key === projItem.key);
-        //project有的键值，model没有，则直接添加到result中
+        // project有的键值，model没有，则直接添加到result中
         if (!modelItem) {
           result.push(projItem);
         }
@@ -75,12 +75,12 @@ export default async (app: IApp) => {
       const mdl = await import(file);
       modelItem.project[projKey] = mdl.default;
       modelItem.project[projKey].key = projKey;
-      console.log("projKdy:", projKey);
-      console.log("modelItem.project[projKey]:", modelItem.project[projKey]);
-      console.log(
-        "modelItem.project[projKey].key:",
-        modelItem.project[projKey].key
-      );
+      // console.log("projKdy:", projKey);
+      // console.log("modelItem.project[projKey]:", modelItem.project[projKey]);
+      // console.log(
+      //   "modelItem.project[projKey].key:",
+      //   modelItem.project[projKey].key
+      // );
     }
 
     if (type === "model") {

@@ -5,6 +5,7 @@ import pinpa from "./store";
 import { createMemoryHistory, createRouter } from "vue-router";
 // import type { RouteRecordRaw } from "vue-router";
 import "./asset/custom.css";
+import "element-plus/theme-chalk/dark/css-vars.css";
 
 /**
  * vue 页面主入口，用于启动 vue
