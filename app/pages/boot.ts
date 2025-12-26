@@ -15,7 +15,7 @@ import "element-plus/theme-chalk/dark/css-vars.css";
  */
 export default (
   pageComponent: Component,
-  { routes, libs }: { routes: any[]; libs: any }
+  { routes, libs }: { routes: any | undefined; libs: any | undefined }
 ) => {
   const app = createApp(pageComponent);
 
